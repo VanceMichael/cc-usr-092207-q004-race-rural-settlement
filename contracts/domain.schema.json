@@ -6,9 +6,15 @@
     "domain",
     "version",
     "sample_id",
+    "event",
     "actors",
     "facts",
-    "constraints"
+    "constraints",
+    "ledger_chain",
+    "scenarios",
+    "controls",
+    "access_rules",
+    "reports"
   ],
   "properties": {
     "domain": {
@@ -17,9 +23,13 @@
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 2
     },
     "sample_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event": {
       "type": "string",
       "minLength": 1
     },
@@ -43,6 +53,83 @@
       "items": {
         "type": "string"
       }
+    },
+    "ledger_chain": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "$ref": "#/$defs/chainLink" }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/scenario" }
+    },
+    "controls": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "$ref": "#/$defs/control" }
+    },
+    "access_rules": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/accessRule" }
+    },
+    "reports": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "$ref": "#/$defs/report" }
+    }
+  },
+  "$defs": {
+    "chainLink": {
+      "type": "object",
+      "required": ["id", "name", "desc"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "desc": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "required": ["id", "name", "trigger", "rule", "bearer"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "trigger": { "type": "string", "minLength": 1 },
+        "rule": { "type": "string", "minLength": 1 },
+        "bearer": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "control": {
+      "type": "object",
+      "required": ["id", "rule"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "rule": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "accessRule": {
+      "type": "object",
+      "required": ["id", "rule"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "rule": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "report": {
+      "type": "object",
+      "required": ["id", "question", "basis"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "question": { "type": "string", "minLength": 1 },
+        "basis": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false
